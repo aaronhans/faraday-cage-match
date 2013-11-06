@@ -1,0 +1,19 @@
+{
+  "name": "nko4-faraday-cage-match",
+  "version": "0.0.0",
+  "description": "Faraday Cage Match",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:nko4/faraday-cage-match.git"
+  },
+  "dependencies": {
+    "nko": "*"
+  },
+  "engines": {
+    "node": "0.10.x"
+  }
+}
