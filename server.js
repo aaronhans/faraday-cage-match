@@ -17,7 +17,7 @@ app.set('view options', {
   layout: false
 });
 
-app.get('*', function(req, res) {
+app.get('/', function(req, res) {
 
   var voteko = '<iframe src="http://nodeknockout.com/iframe/faraday-cage-match" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>';
 
