@@ -41,14 +41,23 @@
 	hero.anchor.y = 0.5;
 	
 	// move the sprite t the center of the screen
-	hero.position.x = 0;
-	hero.position.y = 150;
+	hero.position.x = 50;
+	hero.position.y = 232;
 	
 	stage.addChild(hero);
 
 	makeLetter("A",100,100,stage);
-	makeLetter("Q",50,200,stage);
+	makeLetter("Q",150,200,stage);
 	makeLetter("Z",100,200,stage);
+
+   				var midTexture = PIXI.Texture.fromImage("img/bg-midsml.png");
+   				mid = new PIXI.TilingSprite(midTexture, 512, 256);
+   				mid.position.x = 0;
+   				mid.position.y = 250;
+               mid.tilePosition.x = 0;
+               mid.tilePosition.y = 0;
+   				stage.addChild(mid);
+
 	
 	function animate() {
 	
@@ -56,7 +65,8 @@
 	
 	    // just for fun, lets rotate mr rabbit a little
 	    hero.rotation += 0.05;
-	    hero.position.x += 1;
+	    //hero.position.x += 1;
+	    mid.tilePosition.x -= 1;
 		
 	    // render the stage   
 	    renderer.render(stage);
