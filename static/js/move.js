@@ -1,25 +1,28 @@
+var fallTimer;
+
 function onTouchStart(event)
 {
 	event.preventDefault();
+	clearTimeout(fallTimer);
 	jump();
 }
 function onClick(event)
 {
+	clearTimeout(fallTimer);
 	jump();
 }
 function onTouchEnd(event)
 {
 	event.preventDefault();
-	fall();
+	var fallTimer = setTimeout(fall,500);
 }
 function onRelease(event)
 {
-	fall();
+	var fallTimer = setTimeout(fall,500);
 }
 
 var jumping = false;
 function jump() {
-	console.log('jumpin')
 	rotating = false;
 	falling = false;
 	jumping = true;
@@ -27,7 +30,6 @@ function jump() {
 
 var falling = false;
 function fall() {
-	console.log('back down please')
 	rotating = false;
 	jumping = false;
 	falling = true;
@@ -39,15 +41,18 @@ function letterCollision(lettersInPlay) {
 	{
 		var letter = lettersInPlay[i]
 		if(letter.isPickedUp)continue;
-		var xdist = letter.position.x - steve.position.x;
+		var xdist = letter.position.x - hero.position.x;
 		if(xdist > -letter.width/2 && xdist < letter.width/2)
 		{
-			var ydist = letter.position.y - steve.position.y;
+			var ydist = letter.position.y - hero.position.y;
 		
 			if(ydist > -letter.height/2 && ydist < letter.height/2)
 			{
-				this.engine.pickupManager.removePickup(i);
-				this.engine.pickup();
+				//this.engine.pickupManager.removePickup(i);
+				//this.engine.pickup();
+				console.log(letter.last.text);
+				lettersInPlay.splice(i,1);
+				stage.removeChild(letter);
 			}
 		}
 	}	

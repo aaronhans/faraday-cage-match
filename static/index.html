@@ -76,19 +76,21 @@
 
     if(jumping) {
     	if(hero.position.y > 0) {
-	    	hero.position.y -= 3;
+	    	hero.position.y -= 2;
     	} else {
     		jumping = false;
     	}
     }
     if(falling) {
-    	if(hero.position.y < parseInt(stageHeight - floorHeight - (heroHeight / 2) )) {
-	    	hero.position.y += 3;
+    	if(hero.position.y < parseInt(stageHeight - floorHeight - (heroHeight / 2) - 1 )) {
+	    	hero.position.y += 2;
     	} else {
     		falling = false;
     		rotating = true;
     	}
     }
+
+    letterCollision(lettersInPlay);
 	
     // render the stage   
     renderer.render(stage);
