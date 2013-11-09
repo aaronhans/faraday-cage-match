@@ -1,5 +1,3 @@
-
-
 function makeLetter(letter,xPos,yPos) {
 
 	var sprite = PIXI.Sprite.fromImage("img/tile.png");
@@ -16,7 +14,6 @@ function makeLetter(letter,xPos,yPos) {
 	text.setStyle({font:"bold 128px Arial", fill:"black"});
 
 	sprite.addChild(text)
-	console.log(sprite)
 	return sprite;
 
 }

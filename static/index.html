@@ -15,65 +15,51 @@
 	</style>
 	<script src="/js/libs/pixi.js"></script>
 	<script src="/js/text.js"></script>
+	<script src="/js/move.js"></script>
 
 </head>
 <body>
 	<script>
 	var stageWidth = 400;
 	var stageHeight = 300;
-	
-	// create an new instance of a pixi stage
+	var floorHeight = 50;
+	var heroHeight = 36;
 	var stage = new PIXI.Stage(0x000000);
-	
-	// create a renderer instance
 	var renderer = PIXI.autoDetectRenderer(stageWidth, stageHeight);
-	
-	// add the renderer view element to the DOM
 	document.body.appendChild(renderer.view);
 	
 	requestAnimFrame( animate );
 	
-	// create a texture from an image path
+	// hero
 	var texture = PIXI.Texture.fromImage("img/gearHeart.png");
-	// create a new Sprite using the texture
 	var hero = new PIXI.Sprite(texture);
-	
-	// center the sprites anchor point
 	hero.anchor.x = 0.5;
 	hero.anchor.y = 0.5;
-	
-	// move the sprite t the center of the screen
 	hero.position.x = 50;
-	hero.position.y = 232;
-	
+	hero.position.y = 232;	
 	stage.addChild(hero);
 
+	//all the letters
 	var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	var lettersInPlay = [];
 	for(var i = 0;i<alphabet.length;i++) {
 		var letter = alphabet[i];
 		var yPos = parseInt(Math.random() * stageHeight);
 		var xPos = parseInt(Math.random() * stageWidth * 5);
-		//makeLetter(alphabet[i + 1],xPos,yPos,stage);
-		
-
 		lettersInPlay.push(makeLetter(letter,xPos,yPos));
-
 		stage.addChild(lettersInPlay[lettersInPlay.length -1]);
-		//makeLetter("Q",150,200,stage);
-		//makeLetter("Z",100,200,stage);*/
 	}
-	console.log(lettersInPlay)
 
-   				var midTexture = PIXI.Texture.fromImage("img/bg-midsml.png");
-   				mid = new PIXI.TilingSprite(midTexture, 512, 256);
-   				mid.position.x = 0;
-   				mid.position.y = 250;
-               mid.tilePosition.x = 0;
-               mid.tilePosition.y = 0;
-   				stage.addChild(mid);
-
+	//ground
+	var midTexture = PIXI.Texture.fromImage("img/bg-midsml.png");
+	mid = new PIXI.TilingSprite(midTexture, 512, 256);
+	mid.position.x = 0;
+	mid.position.y = 250;
+     mid.tilePosition.x = 0;
+     mid.tilePosition.y = 0;
+	stage.addChild(mid);
 	
+	//game loop
 	function animate() {
 	
 	    requestAnimFrame( animate );
@@ -82,14 +68,38 @@
 	    	lettersInPlay[i].position.x -= 1;
 	    }
 	
-	    // just for fun, lets rotate mr rabbit a little
 	    hero.rotation += 0.05;
-	    //hero.position.x += 1;
 	    mid.tilePosition.x -= 1;
+
+	    if(jumping) {
+	    	if(hero.position.y > 0) {
+		    	hero.position.y -= 3;
+	    	} else {
+	    		jumping = false;
+	    	}
+	    }
+	    if(falling) {
+	    	if(hero.position.y < parseInt(stageHeight - floorHeight - (heroHeight / 2) )) {
+		    	hero.position.y += 3;
+	    	} else {
+	    		falling = false;
+	    	}
+	    }
 		
 	    // render the stage   
 	    renderer.render(stage);
 	}
+
+	renderer.view.addEventListener("touchstart", onTouchStart, true);
+	renderer.view.addEventListener("touchend", onTouchEnd, true);
+	renderer.view.addEventListener("mousedown",function(event){
+		event.preventDefault()
+		onClick();
+	});
+	renderer.view.addEventListener("mouseup",function(event){
+		event.preventDefault()
+		onRelease();
+	});
 
 	</script>
 
