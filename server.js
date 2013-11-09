@@ -9,7 +9,7 @@ var app = express();
 
 app.configure(function() {
   app.use(express.bodyParser());
-  app.use(express.static('static'));
+  app.use(express.static(__dirname + '/static'));
   app.use(app.router);
 });
 app.set('view engine', 'ejs');
