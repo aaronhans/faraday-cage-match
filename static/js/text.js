@@ -1,8 +1,8 @@
 function makeLetter(letter,xPos,yPos) {
 
 	var sprite = PIXI.Sprite.fromImage("img/tile.png");
-	sprite.height = 50
-	sprite.width = 50
+	sprite.height = letterWidth;
+	sprite.width = letterWidth;
 	sprite.position.x = xPos;
 	sprite.position.y = yPos;
 	sprite.anchor.x = 0;

@@ -39,17 +39,14 @@ function letterCollision(lettersInPlay) {
 	
 	for (var i = 0; i < lettersInPlay.length; i++) 
 	{
-		var letter = lettersInPlay[i]
-		if(letter.isPickedUp)continue;
+		var letter = lettersInPlay[i];
 		var xdist = letter.position.x - hero.position.x;
-		if(xdist > -letter.width/2 && xdist < letter.width/2)
+		if(xdist > -letter.width && xdist < letter.width)
 		{
 			var ydist = letter.position.y - hero.position.y;
 		
-			if(ydist > -letter.height/2 && ydist < letter.height/2)
+			if(ydist > -letter.height && ydist < letter.height)
 			{
-				//this.engine.pickupManager.removePickup(i);
-				//this.engine.pickup();
 				lettersCollected.push(letter.last.text);
 				lettersInPlay.splice(i,1);
 				stage.removeChild(letter);

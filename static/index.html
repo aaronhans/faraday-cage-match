@@ -25,6 +25,7 @@
 	var floorHeight = 50;
 	var heroHeight = 36;
 	var screens = 5;
+	var letterWidth = 50;
 	var lettersCollected = [];
 	var gameOver = false;
 
@@ -73,7 +74,7 @@
 
     for(var i = 0;i<lettersInPlay.length;i++) {
     	lettersInPlay[i].position.x -= 1;
-    	if(lettersInPlay[i].position.x < 0) {
+    	if(lettersInPlay[i].position.x < 0 - letterWidth) {
     		stage.removeChild(lettersInPlay[i]);
     		lettersInPlay.splice(i,1);
     	}
