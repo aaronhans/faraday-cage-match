@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Faraday Cage Match</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			background-color: #000000;
+		}
+		canvas {
+			display:block;
+			margin:0 auto;
+		}
+	</style>
+	<script src="/js/libs/pixi.js"></script>
+
+</head>
+<body>
+	<script>
+	
+	// create an new instance of a pixi stage
+	var stage = new PIXI.Stage(0x000000);
+	
+	// create a renderer instance
+	var renderer = PIXI.autoDetectRenderer(400, 300);
+	
+	// add the renderer view element to the DOM
+	document.body.appendChild(renderer.view);
+	
+	requestAnimFrame( animate );
+	
+	// create a texture from an image path
+	var texture = PIXI.Texture.fromImage("img/gearHeart.png");
+	// create a new Sprite using the texture
+	var hero = new PIXI.Sprite(texture);
+	
+	// center the sprites anchor point
+	hero.anchor.x = 0.5;
+	hero.anchor.y = 0.5;
+	
+	// move the sprite t the center of the screen
+	hero.position.x = 0;
+	hero.position.y = 150;
+	
+	stage.addChild(hero);
+	
+	function animate() {
+	
+	    requestAnimFrame( animate );
+	
+	    // just for fun, lets rotate mr rabbit a little
+	    hero.rotation += 0.05;
+	    hero.position.x += 1;
+		
+	    // render the stage   
+	    renderer.render(stage);
+	}
+
+	</script>
+
+<div style="background-color:#fff">
+<iframe src="http://nodeknockout.com/iframe/faraday-cage-match" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>
+</div>
+
+	</body>
+</html>
