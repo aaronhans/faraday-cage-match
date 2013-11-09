@@ -1,4 +1,6 @@
-function makeLetter(letter,xPos,yPos,parent) {
+
+
+function makeLetter(letter,xPos,yPos) {
 
 	var sprite = PIXI.Sprite.fromImage("img/tile.png");
 	sprite.height = 50
@@ -14,7 +16,7 @@ function makeLetter(letter,xPos,yPos,parent) {
 	text.setStyle({font:"bold 128px Arial", fill:"black"});
 
 	sprite.addChild(text)
-
-	parent.addChild(sprite);
+	console.log(sprite)
+	return sprite;
 
 }

@@ -19,12 +19,14 @@
 </head>
 <body>
 	<script>
+	var stageWidth = 400;
+	var stageHeight = 300;
 	
 	// create an new instance of a pixi stage
 	var stage = new PIXI.Stage(0x000000);
 	
 	// create a renderer instance
-	var renderer = PIXI.autoDetectRenderer(400, 300);
+	var renderer = PIXI.autoDetectRenderer(stageWidth, stageHeight);
 	
 	// add the renderer view element to the DOM
 	document.body.appendChild(renderer.view);
@@ -46,9 +48,22 @@
 	
 	stage.addChild(hero);
 
-	makeLetter("A",100,100,stage);
-	makeLetter("Q",150,200,stage);
-	makeLetter("Z",100,200,stage);
+	var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	var lettersInPlay = [];
+	for(var i = 0;i<alphabet.length;i++) {
+		var letter = alphabet[i];
+		var yPos = parseInt(Math.random() * stageHeight);
+		var xPos = parseInt(Math.random() * stageWidth * 5);
+		//makeLetter(alphabet[i + 1],xPos,yPos,stage);
+		
+
+		lettersInPlay.push(makeLetter(letter,xPos,yPos));
+
+		stage.addChild(lettersInPlay[lettersInPlay.length -1]);
+		//makeLetter("Q",150,200,stage);
+		//makeLetter("Z",100,200,stage);*/
+	}
+	console.log(lettersInPlay)
 
    				var midTexture = PIXI.Texture.fromImage("img/bg-midsml.png");
    				mid = new PIXI.TilingSprite(midTexture, 512, 256);
@@ -62,6 +77,10 @@
 	function animate() {
 	
 	    requestAnimFrame( animate );
+
+	    for(var i = 0;i<lettersInPlay.length;i++) {
+	    	lettersInPlay[i].position.x -= 1;
+	    }
 	
 	    // just for fun, lets rotate mr rabbit a little
 	    hero.rotation += 0.05;
