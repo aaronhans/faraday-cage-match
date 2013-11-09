@@ -13,9 +13,13 @@
   "dependencies": {
     "nko": "*",
     "express": "~3.4.4",
-    "ejs": "~0.8.4"
+    "ejs": "~0.8.4",
+    "should": "~2.0.2"
   },
   "engines": {
     "node": "0.10.x"
+  },
+  "devDependencies": {
+    "mocha": "~1.14.0"
   }
 }
