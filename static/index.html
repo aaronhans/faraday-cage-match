@@ -24,6 +24,10 @@
 	var stageHeight = 300;
 	var floorHeight = 50;
 	var heroHeight = 36;
+	var screens = 5;
+	var lettersCollected = [];
+	var gameOver = false;
+
 	var stage = new PIXI.Stage(0x000000);
 	var renderer = PIXI.autoDetectRenderer(stageWidth, stageHeight);
 	document.body.appendChild(renderer.view);
@@ -45,7 +49,7 @@
 	for(var i = 0;i<alphabet.length;i++) {
 		var letter = alphabet[i];
 		var yPos = parseInt(Math.random() * stageHeight);
-		var xPos = parseInt(Math.random() * stageWidth * 5);
+		var xPos = parseInt(Math.random() * stageWidth * screens);
 		lettersInPlay.push(makeLetter(letter,xPos,yPos));
 		stage.addChild(lettersInPlay[lettersInPlay.length -1]);
 	}
@@ -63,16 +67,25 @@
 	var rotating = true;
 	function animate() {
 	
-    requestAnimFrame( animate );
+		if(!gameOver) {
+	    requestAnimFrame( animate );
+		}
 
     for(var i = 0;i<lettersInPlay.length;i++) {
     	lettersInPlay[i].position.x -= 1;
+    	if(lettersInPlay[i].position.x < 0) {
+    		stage.removeChild(lettersInPlay[i]);
+    		lettersInPlay.splice(i,1);
+    	}
     }
 
 		if(rotating) {
 	    hero.rotation += 0.05;
 		}
     mid.tilePosition.x -= 1;
+    if(mid.tilePosition.x < -parseInt(stageWidth * screens) ) {
+    	gameOver = true;
+    }
 
     if(jumping) {
     	if(hero.position.y > 0) {

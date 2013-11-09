@@ -50,7 +50,7 @@ function letterCollision(lettersInPlay) {
 			{
 				//this.engine.pickupManager.removePickup(i);
 				//this.engine.pickup();
-				console.log(letter.last.text);
+				lettersCollected.push(letter.last.text);
 				lettersInPlay.splice(i,1);
 				stage.removeChild(letter);
 			}
