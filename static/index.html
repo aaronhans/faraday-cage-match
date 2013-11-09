@@ -60,34 +60,38 @@
 	stage.addChild(mid);
 	
 	//game loop
+	var rotating = true;
 	function animate() {
 	
-	    requestAnimFrame( animate );
+    requestAnimFrame( animate );
 
-	    for(var i = 0;i<lettersInPlay.length;i++) {
-	    	lettersInPlay[i].position.x -= 1;
-	    }
-	
+    for(var i = 0;i<lettersInPlay.length;i++) {
+    	lettersInPlay[i].position.x -= 1;
+    }
+
+		if(rotating) {
 	    hero.rotation += 0.05;
-	    mid.tilePosition.x -= 1;
+		}
+    mid.tilePosition.x -= 1;
 
-	    if(jumping) {
-	    	if(hero.position.y > 0) {
-		    	hero.position.y -= 3;
-	    	} else {
-	    		jumping = false;
-	    	}
-	    }
-	    if(falling) {
-	    	if(hero.position.y < parseInt(stageHeight - floorHeight - (heroHeight / 2) )) {
-		    	hero.position.y += 3;
-	    	} else {
-	    		falling = false;
-	    	}
-	    }
-		
-	    // render the stage   
-	    renderer.render(stage);
+    if(jumping) {
+    	if(hero.position.y > 0) {
+	    	hero.position.y -= 3;
+    	} else {
+    		jumping = false;
+    	}
+    }
+    if(falling) {
+    	if(hero.position.y < parseInt(stageHeight - floorHeight - (heroHeight / 2) )) {
+	    	hero.position.y += 3;
+    	} else {
+    		falling = false;
+    		rotating = true;
+    	}
+    }
+	
+    // render the stage   
+    renderer.render(stage);
 	}
 
 	renderer.view.addEventListener("touchstart", onTouchStart, true);
