@@ -6,7 +6,7 @@
 		body {
 			margin: 0;
 			padding: 0;
-			background-color: #000000;
+			background-color: #fff;
 		}
 		canvas {
 			display:block;
@@ -14,6 +14,7 @@
 		}
 	</style>
 	<script src="/js/libs/pixi.js"></script>
+	<script src="/js/text.js"></script>
 
 </head>
 <body>
@@ -44,6 +45,10 @@
 	hero.position.y = 150;
 	
 	stage.addChild(hero);
+
+	makeLetter("A",100,100,stage);
+	makeLetter("Q",50,200,stage);
+	makeLetter("Z",100,200,stage);
 	
 	function animate() {
 	
@@ -65,3 +70,8 @@
 
 	</body>
 </html>
+
+
+<!--
+	How to background: http://flippinawesome.org/2013/11/04/building-a-parallax-scrolling-game-with-pixi-js/
+-->
