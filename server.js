@@ -28,6 +28,14 @@ app.get('/lookup', function(req, res) {
   res.end('{"score":"'+score.toString()+'"}');
 });
 
+app.get('/randomWords', function(req, res) {
+  var url = 'http://api.wordnik.com/v4/words.json/randomWords?limit=100&api_key=0b8ddffb0299036cd920004453705d0f23a00adb1f9655b47';
+  var request = require('request');
+  request(url,function (error, response, body) {
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.end(body);
+  })
+});
 
 app.listen(port, function(err) {
   if (err) { console.error(err); process.exit(-1); }
