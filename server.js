@@ -18,14 +18,6 @@ app.set('views',__dirname + '/views');
 
 app.get('/', function(req, res) {
 
-  var voteko = '<iframe src="http://nodeknockout.com/iframe/faraday-cage-match" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>';
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  res.end('<html><body>' + voteko + '<script type="text/javascript">window.location = "/words";</script></body></html>\n');
-
-});
-
-app.get('/words', function(req, res) {
-
   res.render('index.ejs',{});
 
 });
