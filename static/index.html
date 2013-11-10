@@ -33,13 +33,14 @@
 		if(window.innerWidth < 512) {
 			stageWidth = window.innerWidth;
 			stageHeight = parseInt(window.innerWidth * 0.66);
-			if(stageHeight > window.innerHeight) {
-				stageHeight = window.innerHeight;
-				stageWidth = stageHeight * 1.5;
-			}
+		}
+		if(stageHeight > window.innerHeight) {
+			stageHeight = window.innerHeight;
+			stageWidth = stageHeight * 1.5;
 		}
 	}
 	sizeStage();
+
 	var floorHeight = 50;
 	var heroHeight = 36;
 	var screens = 5;
@@ -86,53 +87,62 @@
 	
 		if(!gameOver) {
 	    requestAnimFrame( animate );
+
+	    for(var i = 0;i<lettersInPlay.length;i++) {
+	    	lettersInPlay[i].position.x -= forwardSpeed;
+	    	if(lettersInPlay[i].position.x < 0 - letterWidth) {
+	    		stage.removeChild(lettersInPlay[i]);
+	    		lettersInPlay.splice(i,1);
+	    	}
+	    }
+
+			if(rotating) {
+		    hero.rotation += 0.1;
+			}
+	    mid.tilePosition.x -= forwardSpeed;
+	    if(mid.tilePosition.x < -parseInt(stageWidth * screens) ) {
+	    	gameOver = true;
+	    }
+
+	    if(jumping) {
+	    	if(hero.position.y > 0) {
+		    	hero.position.y -= 5;
+	    	} else {
+	    		jumping = false;
+	    	}
+	    }
+	    if(falling) {
+	    	if(hero.position.y < parseInt(stageHeight - floorHeight - (heroHeight / 2) - 1 )) {
+		    	hero.position.y += 2;
+	    	} else {
+	    		falling = false;
+	    		rotating = true;
+	    	}
+	    }
+
+	    letterCollision(lettersInPlay);
+		
+	    // render the stage   
+	    renderer.render(stage);
 		}
-
-    for(var i = 0;i<lettersInPlay.length;i++) {
-    	lettersInPlay[i].position.x -= forwardSpeed;
-    	if(lettersInPlay[i].position.x < 0 - letterWidth) {
-    		stage.removeChild(lettersInPlay[i]);
-    		lettersInPlay.splice(i,1);
-    	}
-    }
-
-		if(rotating) {
-	    hero.rotation += 0.1;
-		}
-    mid.tilePosition.x -= forwardSpeed;
-    if(mid.tilePosition.x < -parseInt(stageWidth * screens) ) {
-    	gameOver = true;
-    }
-
-    if(jumping) {
-    	if(hero.position.y > 0) {
-	    	hero.position.y -= 5;
-    	} else {
-    		jumping = false;
-    	}
-    }
-    if(falling) {
-    	if(hero.position.y < parseInt(stageHeight - floorHeight - (heroHeight / 2) - 1 )) {
-	    	hero.position.y += 2;
-    	} else {
-    		falling = false;
-    		rotating = true;
-    	}
-    }
-
-    letterCollision(lettersInPlay);
-	
-    // render the stage   
-    renderer.render(stage);
 	}
 
 
-	window.addEventListener('orientationchange',function() { 
-		sizeStage();
-		renderer = PIXI.autoDetectRenderer(stageWidth, stageHeight);
+	function reset() {
+		// try renderer.view.resize
+		/*
+		gameOver = true;
 		document.body.removeChild(renderer.view);
-		document.body.appendChild(renderer.view);
-		begin();
+		sizeStage();
+		setTimeout(function() {
+			gameOver = false;
+			begin();
+		},100)
+		*/
+	}
+	window.addEventListener('orientationchange',function() { 
+		location.reload();
+		//reset();
 	});
 	</script>
 
