@@ -14,6 +14,7 @@ app.configure(function() {
 });
 
 app.set('view engine', 'ejs');
+app.set('views',__dirname + '/views');
 
 app.get('/', function(req, res) {
 
@@ -25,7 +26,7 @@ app.get('/', function(req, res) {
 
 app.get('/words', function(req, res) {
 
-  res.render('views/index',{});
+  res.render('index.ejs',{});
 
 });
 
