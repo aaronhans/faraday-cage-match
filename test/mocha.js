@@ -46,5 +46,6 @@ describe('wordFinding', function(){
     it('should return amuse tie', function(){
       should.equal("[amuse, tie]", database.wordlist(testLetters));
 	})
+	})
 })
-})
+
