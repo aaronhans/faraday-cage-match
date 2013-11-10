@@ -7,7 +7,7 @@
 		body {
 			margin: 0;
 			padding: 0;
-			background-color: #fff;
+			background-color: #000;
 		}
 		canvas {
 			display:block;
@@ -16,6 +16,22 @@
 		.voting {
 			background-color:#fff;
 			position:absolute;bottom:0;right:0;
+			z-index:3;
+		}
+		.randomWords {
+			position:absolute;
+			top:0;left:0;
+			width: 100%;
+			z-index:1;
+			color: grey;
+			font-size: 48px;
+			opacity:0.3;
+		}
+		#stageContainer {
+			z-index:2;
+			background-color:#000;
+			position: relative;
+			margin:0 auto;
 		}
 	</style>
 <!--	<script src="/js/libs/pixi.js"></script>
@@ -26,6 +42,10 @@
 
 </head>
 <body>
+
+<div class="randomWords"></div>
+<div id="stageContainer"></div>
+
 	<script>
 	var stageWidth, stageHeight;
 	function sizeStage() {
@@ -39,6 +59,7 @@
 			stageHeight = window.innerHeight;
 			stageWidth = stageHeight * 1.5;
 		}
+		document.getElementById('stageContainer').style.width = stageWidth+'px';
 	}
 	sizeStage();
 
@@ -57,12 +78,12 @@
 	function begin() {
 		stage = new PIXI.Stage(0x000000);
 		renderer = PIXI.autoDetectRenderer(stageWidth, stageHeight);
-		document.body.appendChild(renderer.view);
+		document.getElementById('stageContainer').appendChild(renderer.view);
 		
 		playBegun = false;
 		//show directions first
-		var instructionsText = "Run along the letter path to\ncollect letters and bonus\nsquares … click or tap to jump\nletters or evil score-depleting\nsquares. Every eight letters we'll\nscore you by the words you've\ncreated, and subtract from your\nscore letters that couldn't find a\nhome in a word. GO!";
-		textSample = new PIXI.Text(instructionsText, {font: "bold 24px Arial", fill: "white", align: "left"});
+		var instructionsText = "Run along the letter path to\ncollect letters …\n click or tap to jump\nletters.\nEvery eight letters we'll\nscore you by the words you've\ncreated, and subtract from your\nscore letters that couldn't find a\nhome in a word. GO!";
+		textSample = new PIXI.Text(instructionsText, {font: "bold 24px Arial", fill: "grey", align: "left"});
 		textSample.position.x = 20;
 		textSample.position.y = 20;
 		stage.addChild(textSample);
@@ -134,7 +155,6 @@
 		}
 	}
 
-
 	function reset() {
 		gameOver = true;
 		document.body.removeChild(renderer.view);
@@ -149,16 +169,21 @@
 		location.reload();
 		//reset();
 	});
+
+	ajax('/randomWords',function(words) {
+		var wordList = JSON.parse(words);
+		var wordString;
+		for(var i = 0;i<wordList.length;i++) {
+			wordString += ' '+wordList[i].word;
+		}
+		console.log(wordString);
+		document.querySelector('.randomWords').insertAdjacentHTML( 'beforeend', wordString );
+	})
 	</script>
 
-<div class="voting">
-<iframe src="http://nodeknockout.com/iframe/faraday-cage-match" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>
-</div>
+	<div class="voting">
+	<iframe src="http://nodeknockout.com/iframe/faraday-cage-match" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>
+	</div>
 
 	</body>
 </html>
-
-
-<!--
-	How to background: http://flippinawesome.org/2013/11/04/building-a-parallax-scrolling-game-with-pixi-js/
--->
