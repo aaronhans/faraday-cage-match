@@ -36,7 +36,7 @@ function init() {
 		myLetters = new PIXI.Text("", {font: "bold 22px Arial", fill: "black", align: "left"});
 		myLetters.position.y = stageHeight - 35;
 		myLetters.position.x = 20;
-		stage.addChild(myLetters)
+		stage.addChild(myLetters);
 
 		requestAnimFrame( animate );
 	}	
