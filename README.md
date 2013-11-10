@@ -1,3 +1,9 @@
+## Minify js
+
+```
+grunt
+```
+
 ## Quick Start
 
 ~~~sh
