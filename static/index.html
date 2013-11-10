@@ -26,12 +26,20 @@
 </head>
 <body>
 	<script>
-	var stageWidth = 512;
-	var stageHeight = 338;
-	if(window.innerWidth < 512) {
-		stageWidth = window.innerWidth;
-		stageHeight = parseInt(window.innerWidth * 0.66);
+	var stageWidth, stageHeight;
+	function sizeStage() {
+		stageWidth = 512;
+		stageHeight = 338;
+		if(window.innerWidth < 512) {
+			stageWidth = window.innerWidth;
+			stageHeight = parseInt(window.innerWidth * 0.66);
+			if(stageHeight > window.innerHeight) {
+				stageHeight = window.innerHeight;
+				stageWidth = stageHeight * 1.5;
+			}
+		}
 	}
+	sizeStage();
 	var floorHeight = 50;
 	var heroHeight = 36;
 	var screens = 5;
@@ -43,30 +51,34 @@
 	var lettersInPlay = [];
 	var hero, midTexture;
 
-	var stage = new PIXI.Stage(0x000000);
-	var renderer = PIXI.autoDetectRenderer(stageWidth, stageHeight);
-	document.body.appendChild(renderer.view);
-	
-	var playBegun = false;
-	//show directions first
-	var instructionsText = "Run along the letter path to\ncollect letters and bonus\nsquares … click or tap to jump\nletters or evil score-depleting\nsquares. Every eight letters we'll\nscore you by the words you've\ncreated, and subtract from your\nscore letters that couldn't find a\nhome in a word. GO!";
-	var textSample = new PIXI.Text(instructionsText, {font: "bold 24px Arial", fill: "white", align: "left"});
-	textSample.position.x = 20;
-	textSample.position.y = 20;
-	stage.addChild(textSample);
-  renderer.render(stage);
+	var stage, renderer, playBegun, textSample;
+	function begin() {
+		stage = new PIXI.Stage(0x000000);
+		renderer = PIXI.autoDetectRenderer(stageWidth, stageHeight);
+		document.body.appendChild(renderer.view);
+		
+		playBegun = false;
+		//show directions first
+		var instructionsText = "Run along the letter path to\ncollect letters and bonus\nsquares … click or tap to jump\nletters or evil score-depleting\nsquares. Every eight letters we'll\nscore you by the words you've\ncreated, and subtract from your\nscore letters that couldn't find a\nhome in a word. GO!";
+		textSample = new PIXI.Text(instructionsText, {font: "bold 24px Arial", fill: "white", align: "left"});
+		textSample.position.x = 20;
+		textSample.position.y = 20;
+		stage.addChild(textSample);
+	  renderer.render(stage);
 
-  //listeners
-	renderer.view.addEventListener("touchstart", onTouchStart, true);
-	renderer.view.addEventListener("touchend", onTouchEnd, true);
-	renderer.view.addEventListener("mousedown",function(event){
-		event.preventDefault()
-		onClick();
-	});
-	renderer.view.addEventListener("mouseup",function(event){
-		event.preventDefault()
-		onRelease();
-	});
+	  //listeners
+		renderer.view.addEventListener("touchstart", onTouchStart, true);
+		renderer.view.addEventListener("touchend", onTouchEnd, true);
+		renderer.view.addEventListener("mousedown",function(event){
+			event.preventDefault()
+			onClick();
+		});
+		renderer.view.addEventListener("mouseup",function(event){
+			event.preventDefault()
+			onRelease();
+		});
+	}
+	begin();
 	
 	//game loop
 	var forwardSpeed = 2;
@@ -115,7 +127,13 @@
 	}
 
 
-window.addEventListener('orientationchange',function() { location.reload(); });
+	window.addEventListener('orientationchange',function() { 
+		sizeStage();
+		renderer = PIXI.autoDetectRenderer(stageWidth, stageHeight);
+		document.body.removeChild(renderer.view);
+		document.body.appendChild(renderer.view);
+		begin();
+	});
 	</script>
 
 <div class="voting">
