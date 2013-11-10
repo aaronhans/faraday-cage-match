@@ -12,6 +12,10 @@
 			display:block;
 			margin:0 auto;
 		}
+		.voting {
+			background-color:#fff;
+			position:absolute;bottom:0;left:0;
+		}
 	</style>
 	<script src="/js/libs/pixi.js"></script>
 	<script src="/js/text.js"></script>
@@ -21,8 +25,12 @@
 </head>
 <body>
 	<script>
-	var stageWidth = 400;
-	var stageHeight = 300;
+	var stageWidth = 512;
+	var stageHeight = 338;
+	if(window.innerWidth < 512) {
+		stageWidth = window.innerWidth;
+		stageHeight = parseInt(window.innerWidth * 0.66);
+	}
 	var floorHeight = 50;
 	var heroHeight = 36;
 	var screens = 5;
@@ -105,9 +113,11 @@
     renderer.render(stage);
 	}
 
+
+window.addEventListener('orientationchange',function() { location.reload(); });
 	</script>
 
-<div style="background-color:#fff">
+<div class="voting">
 <iframe src="http://nodeknockout.com/iframe/faraday-cage-match" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>
 </div>
 
