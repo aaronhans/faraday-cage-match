@@ -37,6 +37,16 @@ describe('LetterSorting', function(){
  })
 })
 
+describe('AnagramFinding', function(){
+
+  describe('anagramsFound', function(){
+  	var anagramString1 = "aeeimstu";
+    it('should return aeeimstu', function(){
+      should.equal("aeeimstu", letters.anagramFind(anagramString1));
+	})
+ })
+})
+
 // testing functions in 'database'
 
 describe('wordFinding', function(){
