@@ -1,15 +1,23 @@
 var fallTimer;
 
+function beginInteraction() {
+	if(!playBegun) {
+		playBegun = true;
+		stage.removeChild(textSample);
+		init();
+	} else {
+		clearTimeout(fallTimer);
+		jump();
+	}
+}
 function onTouchStart(event)
 {
 	event.preventDefault();
-	clearTimeout(fallTimer);
-	jump();
+	beginInteraction();
 }
 function onClick(event)
 {
-	clearTimeout(fallTimer);
-	jump();
+	beginInteraction();
 }
 function onTouchEnd(event)
 {
@@ -40,10 +48,10 @@ function letterCollision(lettersInPlay) {
 	for (var i = 0; i < lettersInPlay.length; i++) 
 	{
 		var letter = lettersInPlay[i];
-		var xdist = letter.position.x - hero.position.x;
+		var xdist = letter.position.x - hero.position.x + hero.width;
 		if(xdist > -letter.width && xdist < letter.width)
 		{
-			var ydist = letter.position.y - hero.position.y;
+			var ydist = letter.position.y - hero.position.y + hero.width/2;
 		
 			if(ydist > -letter.height && ydist < letter.height)
 			{

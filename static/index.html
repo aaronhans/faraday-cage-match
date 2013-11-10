@@ -16,6 +16,7 @@
 	<script src="/js/libs/pixi.js"></script>
 	<script src="/js/text.js"></script>
 	<script src="/js/move.js"></script>
+	<script src="/js/pieces.js"></script>
 
 </head>
 <body>
@@ -28,44 +29,38 @@
 	var letterWidth = 50;
 	var lettersCollected = [];
 	var gameOver = false;
+	var rotating = true;
+	var alphabet = "EEEEEEEEEEEEEEEEEEEEEEEETTTTTOOOOOTTTTTAAAATTTTTOOOOOAAAAAAAAAAAAOOOOOIIIIIIIIIIIIINNNNNNNNNNNNNRRRRRRRRRRRRRSSSSSSSSSSLLLLLLLUUUUUUUDDDDDDDDGGGGGCCCCCCMMMMMMBBBBPPPPHHHHHFFFFWWWWYYYYVVVKKJJXXQQZZ"; //Super Scrabble letter set
+	var lettersInPlay = [];
+	var hero, midTexture;
 
 	var stage = new PIXI.Stage(0x000000);
 	var renderer = PIXI.autoDetectRenderer(stageWidth, stageHeight);
 	document.body.appendChild(renderer.view);
 	
-	requestAnimFrame( animate );
-	
-	// hero
-	var texture = PIXI.Texture.fromImage("img/gearHeart.png");
-	var hero = new PIXI.Sprite(texture);
-	hero.anchor.x = 0.5;
-	hero.anchor.y = 0.5;
-	hero.position.x = 50;
-	hero.position.y = 232;	
-	stage.addChild(hero);
+	var playBegun = false;
+	//show directions first
+	var instructionsText = "Run along the letter path to\ncollect letters and bonus\nsquares … click or tap to jump\nletters or evil score-depleting\nsquares. Every eight letters we'll\nscore you by the words you've\ncreated, and subtract from your\nscore letters that couldn't find a\nhome in a word. GO!";
+	var textSample = new PIXI.Text(instructionsText, {font: "bold 24px Arial", fill: "white", align: "left"});
+	textSample.position.x = 20;
+	textSample.position.y = 20;
+	stage.addChild(textSample);
+  renderer.render(stage);
 
-	//all the letters
-	var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	var lettersInPlay = [];
-	for(var i = 0;i<alphabet.length;i++) {
-		var letter = alphabet[i];
-		var yPos = parseInt(Math.random() * stageHeight);
-		var xPos = parseInt(Math.random() * stageWidth * screens);
-		lettersInPlay.push(makeLetter(letter,xPos,yPos));
-		stage.addChild(lettersInPlay[lettersInPlay.length -1]);
-	}
-
-	//ground
-	var midTexture = PIXI.Texture.fromImage("img/bg-midsml.png");
-	mid = new PIXI.TilingSprite(midTexture, 512, 256);
-	mid.position.x = 0;
-	mid.position.y = 250;
-     mid.tilePosition.x = 0;
-     mid.tilePosition.y = 0;
-	stage.addChild(mid);
+  //listeners
+	renderer.view.addEventListener("touchstart", onTouchStart, true);
+	renderer.view.addEventListener("touchend", onTouchEnd, true);
+	renderer.view.addEventListener("mousedown",function(event){
+		event.preventDefault()
+		onClick();
+	});
+	renderer.view.addEventListener("mouseup",function(event){
+		event.preventDefault()
+		onRelease();
+	});
 	
 	//game loop
-	var rotating = true;
+	var forwardSpeed = 2;
 	function animate() {
 	
 		if(!gameOver) {
@@ -73,7 +68,7 @@
 		}
 
     for(var i = 0;i<lettersInPlay.length;i++) {
-    	lettersInPlay[i].position.x -= 1;
+    	lettersInPlay[i].position.x -= forwardSpeed;
     	if(lettersInPlay[i].position.x < 0 - letterWidth) {
     		stage.removeChild(lettersInPlay[i]);
     		lettersInPlay.splice(i,1);
@@ -81,16 +76,16 @@
     }
 
 		if(rotating) {
-	    hero.rotation += 0.05;
+	    hero.rotation += 0.1;
 		}
-    mid.tilePosition.x -= 1;
+    mid.tilePosition.x -= forwardSpeed;
     if(mid.tilePosition.x < -parseInt(stageWidth * screens) ) {
     	gameOver = true;
     }
 
     if(jumping) {
     	if(hero.position.y > 0) {
-	    	hero.position.y -= 2;
+	    	hero.position.y -= 5;
     	} else {
     		jumping = false;
     	}
@@ -109,17 +104,6 @@
     // render the stage   
     renderer.render(stage);
 	}
-
-	renderer.view.addEventListener("touchstart", onTouchStart, true);
-	renderer.view.addEventListener("touchend", onTouchEnd, true);
-	renderer.view.addEventListener("mousedown",function(event){
-		event.preventDefault()
-		onClick();
-	});
-	renderer.view.addEventListener("mouseup",function(event){
-		event.preventDefault()
-		onRelease();
-	});
 
 	</script>
 
