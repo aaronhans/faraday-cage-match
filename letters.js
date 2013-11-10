@@ -38,3 +38,10 @@ exports.letterScore = function(string) {
 	}
 	return totalScore;
 }
+
+exports.letterSort = function(string) {
+	var sortArray = string.split(''); 
+	sortArray.sort();
+	var sortedString = sortArray.join('');
+	return sortedString;
+}
