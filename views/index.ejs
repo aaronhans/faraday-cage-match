@@ -51,7 +51,7 @@
 	var rotating = true;
 	var alphabet = "EEEEEEEEEEEEEEEEEEEEEEEETTTTTOOOOOTTTTTAAAATTTTTOOOOOAAAAAAAAAAAAOOOOOIIIIIIIIIIIIINNNNNNNNNNNNNRRRRRRRRRRRRRSSSSSSSSSSLLLLLLLUUUUUUUDDDDDDDDGGGGGCCCCCCMMMMMMBBBBPPPPHHHHHFFFFWWWWYYYYVVVKKJJXXQQZZ"; //Super Scrabble letter set
 	var lettersInPlay = [];
-	var hero, midTexture, myLetters;
+	var hero, midTexture, myLetters, scoreDisplay;
 
 	var stage, renderer, playBegun, textSample;
 	function begin() {
@@ -121,7 +121,7 @@
 	    	}
 	    }
 
-	    letterCollision(lettersInPlay);
+	    letterCollision();
 		
 	    // render the stage   
 	    renderer.render(stage);

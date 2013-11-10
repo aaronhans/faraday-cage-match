@@ -10362,8 +10362,14 @@ function beginInteraction() {
 		stage.removeChild(textSample);
 		init();
 	} else {
-		clearTimeout(fallTimer);
-		jump();
+		if(gameOver) {
+			//hide score display
+			stage.removeChild(scoreDisplay);
+			restart();
+		} else {
+			clearTimeout(fallTimer);
+			jump();
+		}
 	}
 }
 function onTouchStart(event)
@@ -10399,7 +10405,7 @@ function fall() {
 	falling = true;
 }
 
-function letterCollision(lettersInPlay) {
+function letterCollision() {
 	
 	for (var i = 0; i < lettersInPlay.length; i++) 
 	{
@@ -10417,7 +10423,7 @@ function letterCollision(lettersInPlay) {
 				stage.removeChild(letter);
 				if(lettersCollected.length == 8) {
 					gameOver = true;
-					alert('8 letters collected...')
+					scoreGame();
 				}
 			}
 		}
@@ -10443,7 +10449,7 @@ function letterCollision(lettersInPlay) {
 		for(var i = 0;i<20;i++) {
 			var letter = alphabet[parseInt(Math.random() * alphabet.length)];
 			var yPos = parseInt(Math.random() * (stageHeight - 200) + 100);
-			var xPos = i * 100 + 500; //parseInt(Math.random() * stageWidth * screens);
+			var xPos = i * 100 + 300; //parseInt(Math.random() * stageWidth * screens);
 			lettersInPlay.push(makeLetter(letter,xPos,yPos));
 			stage.addChild(lettersInPlay[lettersInPlay.length -1]);
 		}
@@ -10464,7 +10470,41 @@ function letterCollision(lettersInPlay) {
 
 		requestAnimFrame( animate );
 	}	
-};function makeLetter(letter,xPos,yPos) {
+}
+
+function clearPieces() {
+	for(var i = 0;i<lettersInPlay.length;i++) {
+		var letter = lettersInPlay[i];
+		stage.removeChild(letter);
+	}
+	lettersInPlay = [];
+	stage.removeChild(hero);
+	renderer.render(stage);	
+}
+
+function restart() {
+	lettersCollected = [];
+	myLetters.setText("");	
+	renderer.render(stage);
+
+	gameOver = false;
+	init();
+}
+
+function scoreGame() {
+	clearPieces();
+	//display retrieving score
+	var retrieveText = "Retrieving score...";
+	scoreDisplay = new PIXI.Text(retrieveText, {font: "bold 24px Arial", fill: "white", align: "left"});
+	scoreDisplay.position.x = 20;
+	scoreDisplay.position.y = 20;
+	stage.addChild(scoreDisplay);
+  renderer.render(stage);
+	//submit letters
+	 //display word and score
+	 //store this info
+}
+;function makeLetter(letter,xPos,yPos) {
 
 	var sprite = PIXI.Sprite.fromImage("img/tile.png");
 	sprite.height = letterWidth;

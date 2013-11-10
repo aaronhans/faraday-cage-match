@@ -6,8 +6,14 @@ function beginInteraction() {
 		stage.removeChild(textSample);
 		init();
 	} else {
-		clearTimeout(fallTimer);
-		jump();
+		if(gameOver) {
+			//hide score display
+			stage.removeChild(scoreDisplay);
+			restart();
+		} else {
+			clearTimeout(fallTimer);
+			jump();
+		}
 	}
 }
 function onTouchStart(event)
@@ -43,7 +49,7 @@ function fall() {
 	falling = true;
 }
 
-function letterCollision(lettersInPlay) {
+function letterCollision() {
 	
 	for (var i = 0; i < lettersInPlay.length; i++) 
 	{
@@ -61,7 +67,7 @@ function letterCollision(lettersInPlay) {
 				stage.removeChild(letter);
 				if(lettersCollected.length == 8) {
 					gameOver = true;
-					alert('8 letters collected...')
+					scoreGame();
 				}
 			}
 		}
