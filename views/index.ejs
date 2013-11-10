@@ -103,6 +103,12 @@
 	    mid.tilePosition.x -= forwardSpeed;
 	    if(mid.tilePosition.x < -parseInt(stageWidth * screens) ) {
 	    	gameOver = true;
+	    	if(lettersCollected.length < 8) {
+	    		clearPieces();
+	    		gameOver = false;
+	    		init();
+	    	}
+
 	    }
 
 	    if(jumping) {
