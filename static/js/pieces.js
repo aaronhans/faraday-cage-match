@@ -6,7 +6,7 @@ function init() {
 		hero = new PIXI.Text("*", {font: "bold 124px Arial", fill: "orange", align: "left"});
 		//asterisks are super characters, may be easier to get a graphic to use this
 		*/
-		var texture = PIXI.Texture.fromImage("img/gearHeart.png");
+		var texture = PIXI.Texture.fromImage("img/gearHeart_circle.png");
 		hero = new PIXI.Sprite(texture);
 
 		hero.anchor.x = 0.5;
