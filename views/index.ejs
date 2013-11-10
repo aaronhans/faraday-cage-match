@@ -23,7 +23,7 @@
 			top:0;left:0;
 			width: 100%;
 			z-index:1;
-			color: grey;
+			color: gray;
 			font-size: 48px;
 			opacity:0.3;
 			text-transform: uppercase;
@@ -173,7 +173,7 @@
 
 	ajax('/randomWords',function(words) {
 		var wordList = JSON.parse(words);
-		var wordString;
+		var wordString = "";
 		for(var i = 0;i<wordList.length;i++) {
 			wordString += ' '+wordList[i].word;
 		}
