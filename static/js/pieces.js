@@ -1,3 +1,14 @@
+function ajax(url, callback) {
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function() {
+	  if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+	    callback(xmlhttp.responseText);
+	  }
+	}
+	xmlhttp.open("GET",url,true);
+	xmlhttp.send();
+}
+
 function init() {
 
 	if(playBegun) {
@@ -6,7 +17,7 @@ function init() {
 		hero = new PIXI.Text("*", {font: "bold 124px Arial", fill: "orange", align: "left"});
 		//asterisks are super characters, may be easier to get a graphic to use this
 		*/
-		var texture = PIXI.Texture.fromImage("img/gearHeart_circle.png");
+		var texture = PIXI.Texture.fromImage("img/gearheart_circle.png");
 		hero = new PIXI.Sprite(texture);
 
 		hero.anchor.x = 0.5;
@@ -19,7 +30,7 @@ function init() {
 		for(var i = 0;i<20;i++) {
 			var letter = alphabet[parseInt(Math.random() * alphabet.length)];
 			var yPos = parseInt(Math.random() * (stageHeight - 200) + 100);
-			var xPos = i * 100 + 500; //parseInt(Math.random() * stageWidth * screens);
+			var xPos = i * 100 + 300; //parseInt(Math.random() * stageWidth * screens);
 			lettersInPlay.push(makeLetter(letter,xPos,yPos));
 			stage.addChild(lettersInPlay[lettersInPlay.length -1]);
 		}
@@ -40,4 +51,42 @@ function init() {
 
 		requestAnimFrame( animate );
 	}	
+}
+
+function clearPieces() {
+	for(var i = 0;i<lettersInPlay.length;i++) {
+		var letter = lettersInPlay[i];
+		stage.removeChild(letter);
+	}
+	lettersInPlay = [];
+	stage.removeChild(hero);
+	renderer.render(stage);	
+}
+
+function restart() {
+	lettersCollected = [];
+	myLetters.setText("");	
+	renderer.render(stage);
+
+	gameOver = false;
+	init();
+}
+
+function scoreGame() {
+	clearPieces();
+	//display retrieving score
+	var retrieveText = "Retrieving score...";
+	scoreDisplay = new PIXI.Text(retrieveText, {font: "bold 24px Arial", fill: "white", align: "left"});
+	scoreDisplay.position.x = 20;
+	scoreDisplay.position.y = 20;
+	stage.addChild(scoreDisplay);
+  renderer.render(stage);
+
+	//submit letters
+	ajax('/lookup?letters='+lettersCollected.toString().replace(/,/g,''),function(result) {
+		console.log(result);
+		scoreDisplay.setText('Score: '+JSON.parse(result).score);
+		renderer.render(stage);
+		//store this info
+	})
 }

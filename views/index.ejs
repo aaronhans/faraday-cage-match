@@ -51,7 +51,7 @@
 	var rotating = true;
 	var alphabet = "EEEEEEEEEEEEEEEEEEEEEEEETTTTTOOOOOTTTTTAAAATTTTTOOOOOAAAAAAAAAAAAOOOOOIIIIIIIIIIIIINNNNNNNNNNNNNRRRRRRRRRRRRRSSSSSSSSSSLLLLLLLUUUUUUUDDDDDDDDGGGGGCCCCCCMMMMMMBBBBPPPPHHHHHFFFFWWWWYYYYVVVKKJJXXQQZZ"; //Super Scrabble letter set
 	var lettersInPlay = [];
-	var hero, midTexture, myLetters;
+	var hero, midTexture, myLetters, scoreDisplay;
 
 	var stage, renderer, playBegun, textSample;
 	function begin() {
@@ -103,6 +103,12 @@
 	    mid.tilePosition.x -= forwardSpeed;
 	    if(mid.tilePosition.x < -parseInt(stageWidth * screens) ) {
 	    	gameOver = true;
+	    	if(lettersCollected.length < 8) {
+	    		clearPieces();
+	    		gameOver = false;
+	    		init();
+	    	}
+
 	    }
 
 	    if(jumping) {
@@ -121,7 +127,7 @@
 	    	}
 	    }
 
-	    letterCollision(lettersInPlay);
+	    letterCollision();
 		
 	    // render the stage   
 	    renderer.render(stage);
@@ -130,16 +136,14 @@
 
 
 	function reset() {
-		// try renderer.view.resize
-		/*
 		gameOver = true;
 		document.body.removeChild(renderer.view);
 		sizeStage();
 		setTimeout(function() {
-			gameOver = false;
 			begin();
+			gameOver = false;
+			init();
 		},100)
-		*/
 	}
 	window.addEventListener('orientationchange',function() { 
 		location.reload();

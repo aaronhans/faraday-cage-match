@@ -18,10 +18,16 @@ app.set('view engine', 'ejs');
 app.set('views',__dirname + '/views');
 
 app.get('/', function(req, res) {
-
   res.render('index.ejs',{});
-
 });
+app.get('/lookup', function(req, res) {
+  var scoreMe = require(__dirname + '/letters.js');
+  var score = scoreMe.letterScore(req.query.letters);
+  console.log(score);
+  res.writeHead(200, {'Content-Type': 'application/json'});
+  res.end('{"score":"'+score.toString()+'"}');
+});
+
 
 app.listen(port, function(err) {
   if (err) { console.error(err); process.exit(-1); }
