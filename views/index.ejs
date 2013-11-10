@@ -15,7 +15,7 @@
 		}
 		.voting {
 			background-color:#fff;
-			position:absolute;bottom:0;left:0;
+			position:absolute;bottom:0;right:0;
 		}
 	</style>
 	<script src="/js/libs/pixi.js"></script>
@@ -50,7 +50,7 @@
 	var rotating = true;
 	var alphabet = "EEEEEEEEEEEEEEEEEEEEEEEETTTTTOOOOOTTTTTAAAATTTTTOOOOOAAAAAAAAAAAAOOOOOIIIIIIIIIIIIINNNNNNNNNNNNNRRRRRRRRRRRRRSSSSSSSSSSLLLLLLLUUUUUUUDDDDDDDDGGGGGCCCCCCMMMMMMBBBBPPPPHHHHHFFFFWWWWYYYYVVVKKJJXXQQZZ"; //Super Scrabble letter set
 	var lettersInPlay = [];
-	var hero, midTexture;
+	var hero, midTexture, myLetters;
 
 	var stage, renderer, playBegun, textSample;
 	function begin() {

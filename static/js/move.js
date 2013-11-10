@@ -56,8 +56,13 @@ function letterCollision(lettersInPlay) {
 			if(ydist > -letter.height && ydist < letter.height)
 			{
 				lettersCollected.push(letter.last.text);
+				myLetters.setText(lettersCollected.toString());
 				lettersInPlay.splice(i,1);
 				stage.removeChild(letter);
+				if(lettersCollected.length == 8) {
+					gameOver = true;
+					alert('8 letters collected...')
+				}
 			}
 		}
 	}	

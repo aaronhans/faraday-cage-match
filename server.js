@@ -12,17 +12,12 @@ app.configure(function() {
   app.use(express.static(__dirname + '/static'));
   app.use(app.router);
 });
+
 app.set('view engine', 'ejs');
-app.set('view options', {
-  layout: false
-});
 
 app.get('/', function(req, res) {
 
-  var voteko = '<iframe src="http://nodeknockout.com/iframe/faraday-cage-match" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>';
-
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  res.end('<html><body>' + voteko + '</body></html>\n');
+  res.render('index',{});
 
 });
 
@@ -39,3 +34,9 @@ app.listen(port, function(err) {
 
   console.log('Server running at http://0.0.0.0:' + port + '/');
 });
+
+/*
+  var voteko = '<iframe src="http://nodeknockout.com/iframe/faraday-cage-match" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>';
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.end('<html><body>' + voteko + '</body></html>\n');
+*/

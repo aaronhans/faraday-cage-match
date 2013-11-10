@@ -1,7 +1,7 @@
 function init() {
 
 	if(playBegun) {
-		
+
 		/* hero
 		hero = new PIXI.Text("*", {font: "bold 124px Arial", fill: "orange", align: "left"});
 		//asterisks are super characters, may be easier to get a graphic to use this
@@ -32,6 +32,11 @@ function init() {
 		mid.tilePosition.x = 0;
 		mid.tilePosition.y = 0;
 		stage.addChild(mid);
+
+		myLetters = new PIXI.Text("", {font: "bold 22px Arial", fill: "black", align: "left"});
+		myLetters.position.y = stageHeight - 35;
+		myLetters.position.x = 20;
+		stage.addChild(myLetters)
 
 		requestAnimFrame( animate );
 	}	
