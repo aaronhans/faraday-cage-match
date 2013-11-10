@@ -136,16 +136,14 @@
 
 
 	function reset() {
-		// try renderer.view.resize
-		/*
 		gameOver = true;
 		document.body.removeChild(renderer.view);
 		sizeStage();
 		setTimeout(function() {
-			gameOver = false;
 			begin();
+			gameOver = false;
+			init();
 		},100)
-		*/
 	}
 	window.addEventListener('orientationchange',function() { 
 		location.reload();

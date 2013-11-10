@@ -1,3 +1,14 @@
+function ajax(url, callback) {
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function() {
+	  if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+	    callback(xmlhttp.responseText);
+	  }
+	}
+	xmlhttp.open("GET",url,true);
+	xmlhttp.send();
+}
+
 function init() {
 
 	if(playBegun) {
@@ -70,7 +81,12 @@ function scoreGame() {
 	scoreDisplay.position.y = 20;
 	stage.addChild(scoreDisplay);
   renderer.render(stage);
+
 	//submit letters
-	 //display word and score
-	 //store this info
+	ajax('/lookup?letters='+lettersCollected.toString().replace(/,/g,''),function(result) {
+		console.log(result);
+		scoreDisplay.setText('Score: '+JSON.parse(result).score);
+		renderer.render(stage);
+		//store this info
+	})
 }
