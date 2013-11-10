@@ -25,7 +25,7 @@ app.get('/', function(req, res) {
 
 app.get('/words', function(req, res) {
 
-  res.render('index',{});
+  res.render('views/index',{});
 
 });
 
