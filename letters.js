@@ -1,3 +1,5 @@
+var request = require('request');
+
 exports.letterScore = function(string) {
 	var score = 0;
 	var localString = string.toLowerCase();
@@ -44,4 +46,18 @@ exports.letterSort = function(string) {
 	sortArray.sort();
 	var sortedString = sortArray.join('');
 	return sortedString;
+}
+
+exports.anagramFind = function(string) {
+	console.log(string);
+	requestURL = "http://www.anagramica.com/all/:" + string + "?callback=<callback>";
+	request(requestURL, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+		  	results = JSON.parse(response.body);
+		  	console.log(response.body);
+		} else {
+			console.log(error);
+		}
+		callback(null, results);
+	});
 }
