@@ -10513,11 +10513,16 @@ function scoreGame() {
   renderer.render(stage);
 
 	//submit letters
-	ajax('/lookup?letters='+lettersCollected.toString().replace(/,/g,''),function(result) {
-		console.log(result);
-		scoreDisplay.setText('Score: '+JSON.parse(result).score);
-		renderer.render(stage);
-		//store this info
+	var submitLetters = lettersCollected.toString().replace(/,/g,'');
+	var anagramurl = 'http://www.anagramica.com/best/:'+submitLetters;
+	ajax(anagramurl, function(response) {
+		var possibleWords = JSON.parse(response).best;
+		var bestWord = JSON.parse(response).best[0];
+		ajax('/lookup?letters='+bestWord,function(result) {
+			console.log(result);
+			scoreDisplay.setText('Score: '+JSON.parse(result).score + '\nWord: '+bestWord);
+			renderer.render(stage);
+		})
 	})
 }
 ;function makeLetter(letter,xPos,yPos) {

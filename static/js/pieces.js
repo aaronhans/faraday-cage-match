@@ -85,7 +85,7 @@ function scoreGame() {
 	//submit letters
 	ajax('/lookup?letters='+lettersCollected.toString().replace(/,/g,''),function(result) {
 		console.log(result);
-		scoreDisplay.setText('Score: '+JSON.parse(result).score);
+		scoreDisplay.setText('Score: '+JSON.parse(result).score+'\nWord: '+JSON.parse(result).word);
 		renderer.render(stage);
 		//store this info
 	})

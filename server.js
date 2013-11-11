@@ -21,11 +21,20 @@ app.get('/', function(req, res) {
   res.render('index.ejs',{});
 });
 app.get('/lookup', function(req, res) {
-  var scoreMe = require(__dirname + '/letters.js');
-  var score = scoreMe.letterScore(req.query.letters);
-  console.log(score);
-  res.writeHead(200, {'Content-Type': 'application/json'});
-  res.end('{"score":"'+score.toString()+'"}');
+
+  var request = require('request');
+  var anagramUrl = 'http://www.anagramica.com/best/:'+req.query.letters
+  request(anagramUrl,function (error, response, body) {
+    console.log(JSON.parse(body).best)
+    var bestWord = JSON.parse(body).best[0];
+    var scoreMe = require(__dirname + '/letters.js');
+    var score = scoreMe.letterScore(bestWord);
+    //var minusScore = scoreMe.letterScore(req.query.letters.tolowercase.replace(//,''));
+    //score = score - minusScore;
+    console.log(score);
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.end('{"score":"'+score.toString()+'","word":"'+bestWord+'"}');
+  })
 });
 
 app.get('/randomWords', function(req, res) {
